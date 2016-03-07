@@ -29,7 +29,7 @@ def check_age(age)
   end
 end
 
-puts "The Bouncer will tell you what a person of a certain age is allowed to do. Please give The Bouncer your age."
+puts "The Bouncer will tell you what a person of a certain age is allowed to do. Please give The Bouncer your age. The Bouncer will continue to expect you to give it an age until you tell it 'quit'."
 print "> "
 
 start_loop (input = gets.chomp)
