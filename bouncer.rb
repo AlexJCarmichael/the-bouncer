@@ -1,14 +1,40 @@
-#The bouncer will verify the users number input and let the user know what age restrictions they have.
-def start_loop (input)
-  if  input == "quit"
+def greeting
+  puts "The Bouncer will tell you what a person of a certain age is allowed to do in the United States (US) or the United Kingdom (UK). Please give The Bouncer your region. (US) or (UK) or quit to exit the program."
+  print "> "
+end
+
+def select_country (input)
+  if  input == "US"
+    puts "What age do you wish to verify for the United States?"
+    print "> "
+    us_age(age = gets.chomp.to_i)
+  elsif input == "UK"
+    puts "What age do you wish to verify for the United Kingdom?"
+    print "> "
+    uk_age (age=gets.chomp.to_i)
+  elsif input == "QUIT"
     puts "Good-bye"
     exit
   else
-    check_age(input.to_i)
+    puts "Please enter either the US or UK or quit."
+    print "> "
+    start_loop (input = gets.chomp.upcase)
   end
 end
 
-def check_age(age)
+def chaperone_quest (chaperone)
+  if chaperone == "Y"
+    puts "You may drink alcohol but not participate in any other age-restricted vice."
+  elsif chaperone == "N"
+    puts "You may not drink alcohol or participate in any other age-restricted vice."
+  else
+    puts "Please put either (Y)es or (N)o"
+    print "> "
+    chaperone_quest (chaperone = gets.chomp.upcase)
+  end
+end
+
+def us_age(age)
 #age.to_i
 #puts "The class is #{age.class}"
   while true
@@ -24,12 +50,54 @@ def check_age(age)
     when age >= 25
       puts "In addition to the previous vices of smoking, voting, and drinking, you now participate in the worst, car rental."
     end
-    print "> "
-    start_loop (input = gets.chomp)
+    puts "Would you like to test another (AGE), change the (COUNTRY), or (QUIT)?"
+    response = gets.chomp.upcase
+    if response ==  "AGE"
+      puts "What age do you wish to test?"
+      us_age(age=gets.chomp.to_i)
+    elsif response == "COUNTRY"
+      puts "Please select (US) or (UK)."
+      select_country (input = gets.chomp.upcase)
+    elsif response == "QUIT"
+      puts "Good-bye."
+      exit
+    else
+      puts "Invalid response."
+    end
   end
 end
 
-puts "The Bouncer will tell you what a person of a certain age is allowed to do. Please give The Bouncer your age. The Bouncer will continue to expect you to give it an age until you tell it 'quit'."
-print "> "
+def uk_age(age)
+  while true
+    case
+    when age < 1
+      puts "The age given really should be greater than 0. Or an integer."
+    when age < 16
+      puts "There are no vices in which the government has put an age limit on that you are allowed to partake in."
+    when age < 18
+      puts "Are your parents chaperoning you? (Y/N)"
+      chaperone_quest (chaperone = gets.chomp.upcase)
+    when age < 21
+      puts "You are now allowed to take part in the vices of smoking, voting, and drinking."
+    when age >= 25
+      puts "In addition to the previous vices of smoking, voting, and drinking, you now participate in the worst, car rental."
+    end
+    puts "Would you like to test another (AGE), change the (COUNTRY), or (QUIT)?"
+    response = gets.chomp.upcase
+    if response ==  "AGE"
+      puts "What age do you wish to test?"
+      uk_age(age=gets.chomp.to_i)
+    elsif response == "COUNTRY"
+      puts "Please select (US) or (UK)."
+      select_country (input = gets.chomp.upcase)
+    elsif response == "QUIT"
+      puts "Good-bye."
+      exit
+    else
+      puts "Invalid response."
+    end
+  end
+end
 
-start_loop (input = gets.chomp)
+greeting
+select_country (input = gets.chomp.upcase)
